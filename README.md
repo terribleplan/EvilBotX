@@ -8,6 +8,14 @@ This project depends on the following libraries:
 *ApacheCommons (org.apache.commons.lang3)
 ##License
 The source code of this project is available under a New BSD License.
+##TODO (in no order)
+*Documentation
+
+*More modules
+
+*Better error/reconnect handling
+
+*Create config file based runner
 ##Changelog
 [+] Added
 
