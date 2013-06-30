@@ -1,10 +1,8 @@
 package be.xrg.evilbotx.components;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -204,17 +202,9 @@ public class HackCommand extends be.xrg.evilbotx.parents.EBXComponent {
 	}
 
 	private void save() {
-		byte[] a = null;
-		try {
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			ObjectOutputStream objOut = new ObjectOutputStream(out);
-			objOut.writeObject(this.d);
-			a = out.toByteArray();
-			objOut.close();
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		byte[] a = Utilities.serializeObject(this.d);
+		if (a != null) {
+			this.s.putData(this.getComponentID(), this.getComponentName(), a);
 		}
-		this.s.putData(this.getComponentID(), this.getComponentName(), a);
 	}
 }

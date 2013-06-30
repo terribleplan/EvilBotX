@@ -1,10 +1,14 @@
 package be.xrg.evilbotx;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -39,9 +43,21 @@ public class Utilities {
 		}
 		return ret;
 	}
+
 	public static String decodeHTMLEntities(String encoded) {
 		return StringEscapeUtils.unescapeHtml4(encoded);
 	}
+
+	public static String urlEncode(String plain) {
+		try {
+			return URLEncoder.encode(plain, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// should never happen
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static String getPageTitle(String html) {
 		int[] f = new int[2];
 		f[0] = html.indexOf("<title>") + 7;
@@ -55,7 +71,7 @@ public class Utilities {
 		int amount = 86400;
 		if (seconds > amount) {
 			ret += (seconds / amount) + " day";
-			if (seconds/amount > 1) {
+			if (seconds / amount > 1) {
 				ret += "s";
 			}
 			ret += ", ";
@@ -65,7 +81,7 @@ public class Utilities {
 		amount = 3600;
 		if (seconds > amount || started) {
 			ret += (seconds / amount) + " hour";
-			if (seconds/amount > 1) {
+			if (seconds / amount > 1) {
 				ret += "s";
 			}
 			ret += ", ";
@@ -75,7 +91,7 @@ public class Utilities {
 		amount = 60;
 		if (seconds > amount || started) {
 			ret += (seconds / amount) + " minute";
-			if (seconds/amount > 1) {
+			if (seconds / amount > 1) {
 				ret += "s";
 			}
 			ret += ", ";
@@ -87,18 +103,6 @@ public class Utilities {
 			ret += "s";
 		}
 		return ret;
-	}
-
-	public static void saveData(byte[] data, String modName, int modID) {
-
-	}
-
-	public static boolean hasData(String modName, int modID) {
-		return false;
-	}
-
-	public static byte[] loadData(String modName, int modID) {
-		return null;
 	}
 
 	public static String[] formatString(String[] a, int lineLength) {
@@ -167,6 +171,29 @@ public class Utilities {
 			hexChars[j * 2 + 1] = hexArray[v % 16];
 		}
 		return new String(hexChars);
+	}
+
+	public static byte[] serializeObject(Object o) {
+		byte[] a = null;
+		try {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ObjectOutputStream objOut = new ObjectOutputStream(out);
+			objOut.writeObject(o);
+			a = out.toByteArray();
+			objOut.close();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return a;
+	}
+
+	public static String stringArrayToString(String[] arr) {
+		String ret = "";
+		for (String a : arr) {
+			ret += a;
+		}
+		return ret;
 	}
 
 	private static String padString(String ln, int lineLength) {

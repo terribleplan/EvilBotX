@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.pircbotx.PircBotX;
 
 public class EvilBotX {
-	public static String VERSION = "EvilBotX v0.1.0";
+	public static String VERSION = "EvilBotX v0.1.1";
 
 	private ArrayList<BotPair> b = new ArrayList<BotPair>();
 

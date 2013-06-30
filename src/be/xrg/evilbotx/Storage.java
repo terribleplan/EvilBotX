@@ -13,18 +13,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Storage {
-	static String fileName = "data.ebx";
 	static String dfName = "dsssseRs";
 	private Map<String, byte[]> data;
 	private boolean loaded = false;
 	private final String location;
+	private final String fileName;
 
-	public Storage() {
-		this(System.getProperty("user.dir") + "/");
+	public Storage(String filename) {
+		this(filename, System.getProperty("user.dir") + "/");
 	}
 
-	public Storage(String location) {
+	public Storage(String filename, String location) {
 		this.location = location;
+		this.fileName = filename;
 		this.read();
 		if (!this.loaded) {
 			this.init();
@@ -34,7 +35,7 @@ public class Storage {
 	@SuppressWarnings("unchecked")
 	private void read() {
 		File f = new File(this.location);
-		File ff = new File(f, Storage.fileName);
+		File ff = new File(f, this.fileName);
 		if (ff.exists()) {
 			try {
 				FileInputStream fi = new FileInputStream(ff);
@@ -54,7 +55,7 @@ public class Storage {
 	private void write() {
 		try {
 			FileOutputStream f = new FileOutputStream(this.location
-					+ Storage.fileName);
+					+ this.fileName);
 			f.write(Storage.toByteArr((Serializable) this.data));
 			f.close();
 		} catch (IOException e) {
@@ -65,7 +66,7 @@ public class Storage {
 	private void init() {
 		boolean fail = false;
 		File f = new File(this.location);
-		File ff = new File(f, Storage.fileName);
+		File ff = new File(f, this.fileName);
 		if (!f.exists()) {
 			if (!f.mkdirs()) {
 				fail = true;
