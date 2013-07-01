@@ -19,10 +19,20 @@ The source code of this project is available under a New BSD License.
 ##Changelog
 [+] Added
 
-[ ] Removed
+[-] Removed
 
-[~] Fixed
+[~] Fixed/Changed
 
-0.1.0 (current)
+###0.1.1 (current)
+[+] json library (in-tree, org.json)
 
+[+] More Utilities
+
+[+] UrbanCommand
+
+[~] Assorted refactoring
+
+[-] Legacy/unnecessary code
+
+###0.1.0
 [+] Initial release
