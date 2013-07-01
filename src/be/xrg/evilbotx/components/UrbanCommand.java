@@ -22,13 +22,10 @@ public class UrbanCommand extends be.xrg.evilbotx.parents.EBXComponent {
 		if (b.startsWith("!urban")) {
 			if (b.contains(" ")) {
 				String[] c = b.split(" ", 2);
-				System.out.println(c[0]);
-				System.out.println(c[1]);
-				String a = Utilities
-						.getHTMLPage("http://api.urbandictionary.com/v0/define?term="
-								+ Utilities.urlEncode(c[1]))[1];
-				System.out.println(a);
-				JSONObject d = new JSONObject(a);
+				JSONObject d = new JSONObject(
+						Utilities
+								.getHTMLPage("http://api.urbandictionary.com/v0/define?term="
+										+ Utilities.urlEncode(c[1]))[1]);
 				if (d.has("result_type")) {
 					Object g = d.get("result_type");
 					if (g instanceof String) {
